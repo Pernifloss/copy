@@ -1,2 +1,2 @@
 # KubeX
-KubeOS backend
+Backend of a Kube classroom
