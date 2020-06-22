@@ -3,8 +3,7 @@
   "name": "nestjs-now",
   "builds": [
     {
-      "src": "dist/main.js",
-      "use": "@now/node"
+      "src": "dist/main.js"
     }
   ],
   "routes": [
