@@ -64,7 +64,7 @@ export class RoomGateway
     setTimeout(() => {
       client.emit('launchRequest', {});
       this.updateLaunchedClients(client);
-    }, 10000);
+    }, 0);
   }
 
   @SubscribeMessage('ping')

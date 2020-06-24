@@ -1,5 +1,6 @@
 import {
-  ConnectedSocket, MessageBody,
+  ConnectedSocket,
+  MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
@@ -10,9 +11,11 @@ import {
 import { Logger } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 import { FileTransferService } from './fileTransfer.service';
+import { ChatMessage, IChatMessage } from '../chat/ChatMessage';
 
-@WebSocketGateway()
-export class FileTransferGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+@WebSocketGateway({ timeout: 10000 })
+export class FileTransferGateway
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   constructor(private fileTransferService: FileTransferService) {
   }
 
@@ -21,6 +24,20 @@ export class FileTransferGateway implements OnGatewayInit, OnGatewayConnection, 
 
   afterInit(Server: Server): void {
     this.logger.log('FileTransfer Init');
+    this.fileTransferService.registerEvent(filename =>
+      this.sendNewFile(filename),
+    );
+  }
+
+  @SubscribeMessage('downloadPictures')
+  handleMessage(@ConnectedSocket() client: Socket): void {
+    client.emit('uploadedPictures', {
+      pictures: this.fileTransferService.getCurrentFiles(),
+    });
+  }
+
+  private sendNewFile(fileName: string): void {
+    this.server.emit('uploadedSinglePicture', { fileName });
   }
 
   handleDisconnect(client: Socket): void {

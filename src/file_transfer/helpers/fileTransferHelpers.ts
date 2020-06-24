@@ -16,3 +16,5 @@ export const imageFileFilter = (req, file, callback) => {
   }
   callback(null, true);
 };
+
+export type NewFileEvent = (filename : string) => void;
