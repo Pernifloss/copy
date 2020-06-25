@@ -12,7 +12,7 @@ import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { ChatMessage, IChatMessage } from './ChatMessage';
 
-@WebSocketGateway()
+@WebSocketGateway({ timeout: 10000 })
 export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   constructor(private chatService: ChatService) {
   }
