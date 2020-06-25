@@ -18,11 +18,10 @@ import { FileTransferService } from './fileTransfer.service';
 @Controller('files')
 export class FileTransferController {
   private logger: Logger = new Logger('FileService');
-  constructor(private fileTransferService: FileTransferService) {
-  }
+  constructor(private fileTransferService: FileTransferService) {}
 
   @Get(':imgpath')
-  seeUploadedFile(@Param('imgpath') image, @Res() res) {
+  seeUploadedFile(@Param('imgpath') image: string, @Res() res: any): any {
     return res.sendFile(image, { root: './files' });
   }
 
@@ -41,7 +40,7 @@ export class FileTransferController {
       fileFilter: imageFileFilter,
     }),
   )
-  async uploadedFile(@UploadedFile() file) {
+  async uploadedFile(@UploadedFile() file : any) {
     const response = {
       originalname: file.originalname,
       filename: file.filename,

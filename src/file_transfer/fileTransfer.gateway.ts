@@ -11,7 +11,6 @@ import {
 import { Logger } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 import { FileTransferService } from './fileTransfer.service';
-import { ChatMessage, IChatMessage } from '../chat/ChatMessage';
 
 @WebSocketGateway({ timeout: 10000 })
 export class FileTransferGateway
